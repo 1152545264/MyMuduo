@@ -146,12 +146,12 @@ void EventLoop::handleRead()
     }
 }
 
-// 用来唤醒loop所在的channel，向wakupfd_写一个数据,wakeupChannel_就发生读事件，当前loop线程就会被唤醒
+// 用来唤醒loop所在的channel，向wakupfd_写一个数据,wakeupChannel_就发生读事件，当前loop所在的线程就会被唤醒
 // 写什么数据和读什么数据并不重要，主要就是为了完成唤醒EventLoop所在的线程
 void EventLoop::wakeUp()
 {
     uint64_t one = 1;
-    size_t n = write(wakeupFd_, &one, sizeof one);
+    size_t n = write(wakeupFd_, &one  , sizeof one);
     if (n != sizeof one) //
     {
         LOG_ERROR("EventLoop::wakeup() writes %lu bytes instead of 8 \n", n);
